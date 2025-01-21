@@ -1,0 +1,15 @@
+package org.poo.banking;
+
+public class MinimumAgeTransaction extends Transaction {
+    private int timestamp;
+
+    public MinimumAgeTransaction(final int timestamp) {
+        super(timestamp, "You don't have the minimum age required.", null);
+
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
+    }
+}
