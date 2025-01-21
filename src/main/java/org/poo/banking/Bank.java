@@ -133,14 +133,30 @@ public final class Bank {
         users.add(user);
     }
 
+    /**
+     * Adauga un comerciant in lista comerciantilor.
+     *
+     * @param commerciant Comerciantul care urmeaza sa fie adaugat.
+     */
     public void addCommerciant(final Commerciant commerciant) {
         commerciants.add(commerciant);
     }
 
+    /**
+     * Returneaza lista comerciantilor.
+     *
+     * @return O lista cu toti comerciantii disponibili.
+     */
     public List<Commerciant> getCommerciants() {
         return commerciants;
     }
 
+    /**
+     * Returneaza comerciantul care are numele specificat.
+     *
+     * @param name Numele comerciantului cautat. Nu poate fi null sau gol.
+     * @return Comerciantul cu numele specificat sau null daca nu este gasit.
+     */
     public Commerciant getCommerciantByName(final String name) {
         if (name == null || name.isEmpty()) {
             return null;
@@ -153,6 +169,12 @@ public final class Bank {
         return null;
     }
 
+    /**
+     * Returneaza comerciantul care are IBAN-ul specificat.
+     *
+     * @param account IBAN-ul comerciantului cautat. Nu poate fi null sau gol.
+     * @return Comerciantul cu IBAN-ul specificat sau null daca nu este gasit.
+     */
     public Commerciant getCommerciantByIban(final String account) {
         if (account == null || account.isEmpty()) {
             return null;
@@ -165,9 +187,18 @@ public final class Bank {
         return null;
     }
 
+    /**
+     * Returneaza contul clasic asociat cu un numar de card specificat.
+     *
+     * Metoda parcurge toti utilizatorii si toate conturile lor pentru a gasi
+     * contul care contine cardul cu numarul specificat.
+     *
+     * @param cardNumber Numarul cardului cautat. Nu poate fi null.
+     * @return Contul clasic care contine cardul cu numarul specificat sau null daca nu este gasit.
+     */
     public ClassicAccount getAccountByCardNumber(final String cardNumber) {
-        // iterează toți userii, toate conturile,
-        // caută contul care conține cardNumber în .getCards().
+        // itereaza toti userii, toate conturile,
+        // cauta contul care contine cardNumber în .getCards().
         for (User u : users) {
             for (ClassicAccount acc : u.getAccounts()) {
                 if (acc.getCardByNumber(cardNumber) != null) {
@@ -184,7 +215,7 @@ public final class Bank {
         return currencyGraph;
     }
 
-    public void setCurrencyGraph(Graph<Currency> currencyGraph) {
+    public void setCurrencyGraph(final Graph<Currency> currencyGraph) {
         this.currencyGraph = currencyGraph;
     }
 

@@ -1,6 +1,6 @@
 package org.poo.banking;
 
-public class MinimumAgeTransaction extends Transaction {
+public final class MinimumAgeTransaction extends Transaction {
     private int timestamp;
 
     public MinimumAgeTransaction(final int timestamp) {
@@ -9,7 +9,7 @@ public class MinimumAgeTransaction extends Transaction {
     }
 
     @Override
-    public void accept(Visitor v) {
+    public void accept(final Visitor v) {
         v.visit(this);
     }
 }

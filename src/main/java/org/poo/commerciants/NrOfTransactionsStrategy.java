@@ -11,15 +11,15 @@ import org.poo.utils.CashbackHandler;
  * La fiecare tranzactie, incrementam contorul
  * si daca atinge 2 / 5 / 10, setam discounturile corespunzatoare
  */
-public class NrOfTransactionsStrategy implements CashbackStrategy {
+public final class NrOfTransactionsStrategy implements CashbackStrategy {
 
     @Override
-    public void applyCashback(ClassicAccount account,
-                              double convertedAmount,
-                              Currency currentAccountCurrency,
-                              Graph<Currency> currencyGraph,
-                              User user,
-                              Commerciant currentCommerciant) {
+    public void applyCashback(final ClassicAccount account,
+                              final double convertedAmount,
+                              final Currency currentAccountCurrency,
+                              final Graph<Currency> currencyGraph,
+                              final User user,
+                              final Commerciant currentCommerciant) {
 
         CashbackHandler.applyNrOfTransactions(account, currentCommerciant);
     }

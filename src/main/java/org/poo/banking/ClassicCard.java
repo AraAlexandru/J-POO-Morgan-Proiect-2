@@ -17,10 +17,16 @@ public class ClassicCard {
         this.status = status;
     }
 
+    /**
+     * Blocheaza cardul, setand statusul ca inactiv.
+     */
     public void freeze() {
         this.setStatus(false);
     }
 
+    /**
+     * Deblocheaza cardul, setand statusul ca activ.
+     */
     public void activate() {
         this.setStatus(true);
     }

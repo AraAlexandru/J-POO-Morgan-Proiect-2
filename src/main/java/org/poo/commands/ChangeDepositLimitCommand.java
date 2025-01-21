@@ -8,7 +8,7 @@ import org.poo.banking.BusinessAccount;
 import org.poo.banking.ClassicAccount;
 import org.poo.banking.User;
 
-public class ChangeDepositLimitCommand implements Command {
+public final class ChangeDepositLimitCommand implements Command {
     private String email;
     private String account;
     private double amount;

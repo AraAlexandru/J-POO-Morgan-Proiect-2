@@ -21,7 +21,14 @@ public abstract class Transaction implements Visitable {
         return description;
     }
 
-    public String getIban() { return accountIban; }
+    /**
+     * Returneaza IBAN-ul asociat acestui cont.
+     *
+     * @return String care reprezinta IBAN-ul contului.
+     */
+    public String getIban() {
+        return accountIban;
+    }
 
 
     public Transaction(final int timestamp, final String description, final String accountIban) {
@@ -30,6 +37,11 @@ public abstract class Transaction implements Visitable {
         this.accountIban = accountIban;
     }
 
+    /**
+     * Returneaza IBAN-ul asociat acestui cont.
+     *
+     * @return String care reprezinta IBAN-ul contului.
+     */
     public String getAccountIban() {
         return accountIban;
     }

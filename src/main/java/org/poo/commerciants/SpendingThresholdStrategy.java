@@ -9,14 +9,14 @@ import org.poo.utils.CashbackHandler;
 /**
  * Strategy pt "spendingThreshold".
  */
-public class SpendingThresholdStrategy implements CashbackStrategy {
+public final class SpendingThresholdStrategy implements CashbackStrategy {
     @Override
-    public void applyCashback(ClassicAccount account,
-                              double convertedAmount,
-                              Currency currentAccountCurrency,
-                              Graph<Currency> currencyGraph,
-                              User user,
-                              Commerciant currentCommerciant) {
+    public void applyCashback(final ClassicAccount account,
+                              final double convertedAmount,
+                              final Currency currentAccountCurrency,
+                              final Graph<Currency> currencyGraph,
+                              final User user,
+                              final Commerciant currentCommerciant) {
 
         CashbackHandler.applySpendingThreshold(account,
                 convertedAmount,

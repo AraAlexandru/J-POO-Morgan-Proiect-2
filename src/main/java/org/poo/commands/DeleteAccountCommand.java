@@ -39,7 +39,6 @@ public class DeleteAccountCommand implements Command {
                     "Account couldn't be deleted - see org.poo.transactions for details";
 
             if (account != null) {
-                System.out.println("Account " + account.getIban() + " has " + account.getBalance() + " funds");
                 if (account.getBalance() != 0) {
                     String errorMessage =
                             "Account couldn't be deleted - there are funds remaining";

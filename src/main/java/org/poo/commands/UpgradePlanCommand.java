@@ -14,7 +14,7 @@ import org.poo.banking.User;
 
 import java.util.ArrayList;
 
-public class UpgradePlanCommand implements Command {
+public final class UpgradePlanCommand implements Command {
     private String account;
     private String newPlanType;
     private Graph<Currency> currencyGraph;
@@ -24,14 +24,16 @@ public class UpgradePlanCommand implements Command {
     private static final double SILVER_TO_GOLD = 250;
     private static final int SILVER_ELIGIBLE_PAYMENT_COUNT = 5;
 
-    public UpgradePlanCommand(final String account, final String newPlanType, final Graph<Currency> currencyGraph) {
+    public UpgradePlanCommand(final String account, final String newPlanType,
+                              final Graph<Currency> currencyGraph) {
         this.account = account;
         this.newPlanType = newPlanType;
         this.currencyGraph = currencyGraph;
     }
 
     @Override
-    public void execute(Bank bank, ArrayNode output, ObjectMapper mapper, int timestamp) {
+    public void execute(final Bank bank, final ArrayNode output,
+                        final ObjectMapper mapper, final int timestamp) {
         User user = bank.getUserByAccount(account);
 
         if (user == null) {
@@ -106,6 +108,13 @@ public class UpgradePlanCommand implements Command {
         }
     }
 
+    /**
+     * Verifica daca planul țintă reprezintă un downgrade față de planul curent.
+     *
+     * @param currentPlan Planul curent al utilizatorului.
+     * @param targetPlan Planul țintă.
+     * @return True dacă este un downgrade, altfel false.
+     */
     public boolean checkDowngradePlan(final PlanType currentPlan, final PlanType targetPlan) {
         if (targetPlan == PlanType.STANDARD) {
             return true;

@@ -9,7 +9,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public final class User {
     private String firstName;
     private String lastName;
     private String email;
@@ -82,7 +82,8 @@ public class User {
     public List<Transaction> getTransactions(final String iban) {
         List<Transaction> result = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            if (iban == null || transaction.getIban() == null || transaction.getIban().equals(iban)) {
+            if (iban == null || transaction.getIban() == null
+                    || transaction.getIban().equals(iban)) {
                 result.add(transaction);
             }
         }
@@ -173,6 +174,12 @@ public class User {
         return true;
     }
 
+    /**
+     * Adauga un eveniment de plata impartita in lista de evenimente.
+     *
+     * @param splitPaymentEvent Evenimentul de plata impartita care urmeaza sa fie adaugat.
+     *                          Nu poate fi null.
+     */
     public void addSplitPayment(final SplitPaymentEvent splitPaymentEvent) {
         splitPaymentEvents.add(splitPaymentEvent);
     }
@@ -292,10 +299,22 @@ public class User {
         splitPaymentEvents.remove(splitPaymentEvent);
     }
 
+    /**
+     * Adauga un observator in lista de observatori.
+     * Observatorii sunt notificati in cazul unor schimbari ale utilizatorului.
+     *
+     * @param obs Observatorul care urmeaza sa fie adaugat. Nu poate fi null.
+     */
     public void addObserver(final UserObserver obs) {
         observers.add(obs);
     }
 
+    /**
+     * Elimina un observator din lista de observatori.
+     * Observatorii sunt notificati in cazul unor schimbari ale utilizatorului.
+     *
+     * @param obs Observatorul care urmeaza sa fie eliminat. Nu poate fi null.
+     */
     public void removeObserver(final UserObserver obs) {
         observers.remove(obs);
     }

@@ -4,7 +4,7 @@ import org.poo.banking.ClassicAccount;
 import org.poo.banking.PlanType;
 
 
-public class CashBackCalculator {
+public final class CashBackCalculator {
 
     // Praguri pentru cashback
     private static final double HIGH_SPENDING_THRESHOLD = 500.0;

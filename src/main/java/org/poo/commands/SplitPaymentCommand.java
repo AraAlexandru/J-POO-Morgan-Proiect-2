@@ -52,8 +52,10 @@ public class SplitPaymentCommand implements Command {
     @Override
     public void execute(final Bank bank, final ArrayNode output,
                         final ObjectMapper mapper, final int timestamp) {
-        List<ClassicAccount> classicAccounts = accountsForSplit.stream().map(bank::getAccountByIban).toList();
-        SplitPaymentEvent splitPaymentEvent = new SplitPaymentEvent(Currency.valueOf(currency), classicAccounts, totalAmount, splitAmounts, type, timestamp, currencyGraph);
+        List<ClassicAccount> classicAccounts =
+                accountsForSplit.stream().map(bank::getAccountByIban).toList();
+        SplitPaymentEvent splitPaymentEvent = new SplitPaymentEvent(Currency.valueOf(currency),
+                classicAccounts, totalAmount, splitAmounts, type, timestamp, currencyGraph);
         for (ClassicAccount account : classicAccounts) {
             User user = bank.getUserByAccount(account.getIban());
             user.addSplitPayment(splitPaymentEvent);

@@ -10,7 +10,7 @@ import org.poo.banking.ClassicAccount;
 import org.poo.banking.TransactionType;
 import org.poo.banking.User;
 
-public class AddFundsCommand implements Command {
+public final class AddFundsCommand implements Command {
     private String iban;
     private double amount;
     private String email;

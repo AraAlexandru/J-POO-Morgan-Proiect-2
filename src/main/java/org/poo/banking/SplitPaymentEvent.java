@@ -19,9 +19,11 @@ public final class SplitPaymentEvent {
     private final Bank bank = Bank.getInstance();
     private final Graph graph;
 
-    public SplitPaymentEvent(final Currency currency, final List<ClassicAccount> accountsInvolved,
+    public SplitPaymentEvent(final Currency currency,
+                             final List<ClassicAccount> accountsInvolved,
                              final double amount,
-                             final List<Double> amountsToPay, final String type, final int timestamp,
+                             final List<Double> amountsToPay,
+                             final String type, final int timestamp,
                              final Graph graph) {
         this.amount = amount;
         this.currency = currency;
@@ -35,7 +37,7 @@ public final class SplitPaymentEvent {
     }
 
     private boolean checkAllAccepted() {
-        for(boolean accept : accepted) {
+        for (boolean accept : accepted) {
             if (!accept) {
                 return false;
             }
@@ -103,31 +105,33 @@ public final class SplitPaymentEvent {
 
     private String subtractFunds() {
         for (int i = 0; i < accountsInvolved.size(); i++) {
-            double amount = amountsToPay.get(i);
-            ArrayList<Graph<Double>.Edge> paths =  graph.getPath(currency, accountsInvolved.get(i).getCurrency());
+            double localAmount = amountsToPay.get(i);
+            ArrayList<Graph<Double>.Edge> paths =
+                    graph.getPath(currency, accountsInvolved.get(i).getCurrency());
             if (paths != null) {
                 double rate = 1.0;
                 for (Graph<Double>.Edge path : paths) {
                     rate *= path.getCost();
                 }
-                amount *= rate;
+                localAmount *= rate;
             }
             if (accountsInvolved.get(i)
-                    .getBalance() < amount) {
+                    .getBalance() < localAmount) {
                 return accountsInvolved.get(i).getIban();
             }
         }
         for (int i = 0; i < accountsInvolved.size(); i++) {
-            double amount = amountsToPay.get(i);
-            ArrayList<Graph<Double>.Edge> paths =  graph.getPath(currency, accountsInvolved.get(i).getCurrency());
+            double localAmount = amountsToPay.get(i);
+            ArrayList<Graph<Double>.Edge> paths =
+                    graph.getPath(currency, accountsInvolved.get(i).getCurrency());
             if (paths != null) {
                 double rate = 1.0;
                 for (Graph<Double>.Edge path : paths) {
                     rate *= path.getCost();
                 }
-                amount *= rate;
+                localAmount *= rate;
             }
-            accountsInvolved.get(i).addFunds(-amount);
+            accountsInvolved.get(i).addFunds(-localAmount);
         }
         return null;
     }
@@ -138,25 +142,20 @@ public final class SplitPaymentEvent {
      * @param user the user that accepts the payment
      */
     public void accept(final User user) {
-//        System.out.println("User accepted split payment" + user.getEmail() + " at " + timestamp);
         for (int i = 0; i < accountsInvolved.size(); i++) {
             User owner = bank.getUserByAccount(accountsInvolved.get(i).getIban());
             if (owner == user) {
                 accepted[i] = true;
                 if (checkAllAccepted()) {
-//                    System.out.println("All users accepted split payment at " + timestamp);
                     try {
                         final String iban = subtractFunds();
-//                        System.out.println("Iban: " + iban + " at " + timestamp);
                         if (iban != null) {
-//                            System.out.println("Account " + iban + " has insufficient funds for a split payment at + " + timestamp + ".");
                             notEnoughFunds(iban);
                         } else {
                             addTransactions(null);
                         }
 
                     } catch (Exception e) {
-//                        System.out.println("Exception caught: " + e.getMessage());
                         addTransactions("An error occurred while processing the split payment.");
                         return;
                     }

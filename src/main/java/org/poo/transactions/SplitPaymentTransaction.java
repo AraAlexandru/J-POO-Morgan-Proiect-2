@@ -15,8 +15,10 @@ public class SplitPaymentTransaction extends Transaction {
 
     public SplitPaymentTransaction(final int timestamp, final double totalAmount,
                                    final Currency currency,
-                                   final List<String> involvedAccounts, final String iban,
-                                   final List<Double> amountsForUsers, final String splitPaymentType,
+                                   final List<String> involvedAccounts,
+                                   final String iban,
+                                   final List<Double> amountsForUsers,
+                                   final String splitPaymentType,
                                    final String error) {
         super(timestamp, "Split payment of "
                 + String.format("%.2f", totalAmount) + " " + currency.toString(), iban);

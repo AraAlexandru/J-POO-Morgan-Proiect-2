@@ -7,20 +7,19 @@ import org.poo.banking.Bank;
 import org.poo.banking.BusinessAccount;
 import org.poo.banking.ClassicAccount;
 import org.poo.banking.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessReportCommand implements Command {
+public final class BusinessReportCommand implements Command {
     private String type;
     private String accountIban;
     private int startTimestamp;
     private int endTimestamp;
     private int timestamp;
 
-    public BusinessReportCommand(String type, String accountIban,
-                                 int startTimestamp, int endTimestamp,
-                                 int timestamp) {
+    public BusinessReportCommand(final String type, final String accountIban,
+                                 final int startTimestamp, final int endTimestamp,
+                                 final int timestamp) {
         this.type = type;
         this.accountIban = accountIban;
         this.startTimestamp = startTimestamp;
@@ -29,11 +28,11 @@ public class BusinessReportCommand implements Command {
     }
 
     @Override
-    public void execute(Bank bank, ArrayNode output, ObjectMapper mapper, int ignored) {
+    public void execute(final Bank bank, final ArrayNode output,
+                        final ObjectMapper mapper, final int ignored) {
 
         ObjectNode node = mapper.createObjectNode();
         node.put("command", "businessReport");
-
 
         ClassicAccount acc = bank.getAccountByIban(accountIban);
         if (acc == null) {
@@ -103,10 +102,10 @@ public class BusinessReportCommand implements Command {
             reportOutput.set("employees", employeesArr);
             reportOutput.put("total spent", totalSpent);
             reportOutput.put("total deposited", totalDeposited);
-        } else if ("commerciant".equals(this.type)) {
-
         }
-
+            //        } else if ("commerciant".equals(this.type)) {
+//
+//        }
         node.set("output", reportOutput);
         node.put("timestamp", this.timestamp);
         output.add(node);
@@ -115,7 +114,7 @@ public class BusinessReportCommand implements Command {
     /**
      * Construiește numele complet "LastName FirstName" pentru sortare și afișare.
      */
-    private String buildUserName(User u) {
+    private String buildUserName(final User u) {
         if (u == null) {
             return "";
         }
@@ -125,7 +124,8 @@ public class BusinessReportCommand implements Command {
     /**
      * Comparator pt sortare.
      */
-    private int compareNames(String email1, String email2, Bank bank) {
+    private int compareNames(final String email1, final String email2,
+                             final Bank bank) {
         User u1 = bank.getUserByEmail(email1);
         User u2 = bank.getUserByEmail(email2);
         if (u1 == null || u2 == null) {

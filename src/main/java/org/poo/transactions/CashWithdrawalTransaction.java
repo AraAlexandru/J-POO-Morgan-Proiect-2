@@ -3,7 +3,7 @@ package org.poo.banking;
 import lombok.Getter;
 
 @Getter
-public class CashWithdrawalTransaction extends Transaction {
+public final class CashWithdrawalTransaction extends Transaction {
     private double amount;
     private String errorMessage;
 
@@ -19,7 +19,7 @@ public class CashWithdrawalTransaction extends Transaction {
         this.errorMessage = errorMessage;
     }
     @Override
-    public void accept(Visitor visitor) {
+    public void accept(final Visitor visitor) {
         visitor.visit(this);
     }
 }

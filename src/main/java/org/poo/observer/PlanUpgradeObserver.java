@@ -1,14 +1,20 @@
 package org.poo.observer;
 
-import org.poo.banking.*;
-import org.poo.banking.Transaction;
+import org.poo.banking.Bank;
+import org.poo.banking.CardPaymentTransaction;
+import org.poo.banking.Currency;
 import org.poo.banking.PlanType;
+import org.poo.banking.Transaction;
+import org.poo.banking.TransferTransaction;
+import org.poo.banking.User;
 import org.poo.commands.SendMoneyCommand;
 
-public class PlanUpgradeObserver implements UserObserver {
+
+public final class PlanUpgradeObserver implements UserObserver {
+    private static final double SILVER_ELIGIBLE_PAYMENTS = 300;
 
     @Override
-    public void onNewTransaction(User user, Transaction transaction) {
+    public void onNewTransaction(final User user, final Transaction transaction) {
         if (user.getPlanType() == PlanType.SILVER) {
             double amountInAccountCurrency = getAmountFromTransaction(transaction);
             Currency accCurrency = getCurrencyFromTransaction(transaction);
@@ -16,13 +22,13 @@ public class PlanUpgradeObserver implements UserObserver {
             double amountInRON = SendMoneyCommand.convertToRon(amountInAccountCurrency, accCurrency,
                     Bank.getInstance().getCurrencyGraph());
 
-            if (amountInRON >= 300) {
+            if (amountInRON >= SILVER_ELIGIBLE_PAYMENTS) {
                 user.incrementSilverEligiblePayments();
             }
         }
     }
 
-    private double getAmountFromTransaction(Transaction t) {
+    private double getAmountFromTransaction(final Transaction t) {
 
         if (t instanceof TransferTransaction) {
             return ((TransferTransaction) t).getAmount();
@@ -33,7 +39,7 @@ public class PlanUpgradeObserver implements UserObserver {
         return 0.0;
     }
 
-    private Currency getCurrencyFromTransaction(Transaction t) {
+    private Currency getCurrencyFromTransaction(final Transaction t) {
         if (t instanceof TransferTransaction) {
             return ((TransferTransaction) t).getType();
         }

@@ -1,6 +1,6 @@
 package org.poo.commerciants;
 
-public class Commerciant {
+public final class Commerciant {
     private String name;
     private int id;
     private String account;
@@ -29,11 +29,21 @@ public class Commerciant {
         }
     }
 
-    public String getName() { return name; }
-    public int getId() { return id; }
-    public String getAccount() { return account; }
-    public String getType() { return type; }
-    public String getCashBackStrategy() { return cashBackStrategy; }
+    public String getName() {
+        return name;
+    }
+    public int getId() {
+        return id;
+    }
+    public String getAccount() {
+        return account;
+    }
+    public String getType() {
+        return type;
+    }
+    public String getCashBackStrategy() {
+        return cashBackStrategy;
+    }
 
     public CashbackStrategy getStrategy() {
         return this.strategy;

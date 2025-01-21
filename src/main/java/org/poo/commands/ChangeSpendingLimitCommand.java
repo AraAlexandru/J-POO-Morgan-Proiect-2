@@ -8,13 +8,14 @@ import org.poo.banking.BusinessAccount;
 import org.poo.banking.ClassicAccount;
 import org.poo.banking.User;
 
-public class ChangeSpendingLimitCommand implements Command {
+public final class ChangeSpendingLimitCommand implements Command {
     private String email;
     private String account;
     private double amount;
     private int timestamp;
 
-    public ChangeSpendingLimitCommand(String email, String account, double amount, int timestamp) {
+    public ChangeSpendingLimitCommand(final String email, final String account,
+                                      final double amount, final int timestamp) {
         this.email = email;
         this.account = account;
         this.amount = amount;
@@ -22,7 +23,8 @@ public class ChangeSpendingLimitCommand implements Command {
     }
 
     @Override
-    public void execute(Bank bank, ArrayNode output, ObjectMapper mapper, int ts) {
+    public void execute(final Bank bank, final ArrayNode output,
+                        final ObjectMapper mapper, final int ts) {
         ObjectNode node = mapper.createObjectNode();
         node.put("command", "changeSpendingLimit");
 

@@ -143,13 +143,14 @@ public class TransactionPrinter implements Visitor {
         node.put("currency", splitPayment.getCurrency().toString());
         node.put("splitPaymentType", splitPayment.getSplitPaymentType());
         if (splitPayment.getSplitPaymentType().equals("custom")) {
-            ArrayNode transactionsArray = mapper.createArrayNode();
+            ArrayNode localTransactionsArray = mapper.createArrayNode();
             for (Double amount : splitPayment.getAmountsForUsers()) {
-                transactionsArray.add(amount);
+                localTransactionsArray.add(amount);
             }
-            node.put("amountForUsers", transactionsArray);
+            node.put("amountForUsers", localTransactionsArray);
         } else {
-            node.put("amount", splitPayment.getTotalAmount() / splitPayment.getInvolvedAccounts().size());
+            node.put("amount", splitPayment.getTotalAmount()
+                    / splitPayment.getInvolvedAccounts().size());
         }
         ArrayNode involvedAccountsArray = mapper.createArrayNode();
         for (String iban : splitPayment.getInvolvedAccounts()) {
@@ -189,16 +190,28 @@ public class TransactionPrinter implements Visitor {
         transactionsArray.add(node);
     }
 
+    /**
+     * Proceseaza o tranzactie de tip MinimumAgeTransaction si adauga informatiile
+     * corespunzatoare in nodul JSON al tranzactiilor.
+     *
+     * @param minimumAge Tranzactia de tip MinimumAgeTransaction.
+     */
     @Override
-    public void visit(MinimumAgeTransaction minimumAge) {
+    public void visit(final MinimumAgeTransaction minimumAge) {
         ObjectNode node = mapper.createObjectNode();
         node.put("description", minimumAge.getDescription());
         node.put("timestamp", minimumAge.getTimestamp());
         transactionsArray.add(node);
     }
 
+    /**
+     * Proceseaza o tranzactie de tip UpgradePlanTransaction si adauga informatiile
+     * corespunzatoare in nodul JSON al tranzactiilor.
+     *
+     * @param upgradePlan Tranzactia de tip UpgradePlanTransaction.
+     */
     @Override
-    public void visit(UpgradePlanTransaction upgradePlan) {
+    public void visit(final UpgradePlanTransaction upgradePlan) {
         ObjectNode node = mapper.createObjectNode();
         node.put("accountIBAN", upgradePlan.getAccountIban());
         node.put("description", upgradePlan.getDescription());
@@ -207,8 +220,14 @@ public class TransactionPrinter implements Visitor {
         transactionsArray.add(node);
     }
 
+    /**
+     * Proceseaza o tranzactie de tip CashWithdrawalTransaction si adauga informatiile
+     * corespunzatoare in nodul JSON al tranzactiilor.
+     *
+     * @param cashWithdrawal Tranzactia de tip CashWithdrawalTransaction.
+     */
     @Override
-    public void visit(CashWithdrawalTransaction cashWithdrawal) {
+    public void visit(final CashWithdrawalTransaction cashWithdrawal) {
         ObjectNode node = mapper.createObjectNode();
         node.put("description", cashWithdrawal.getDescription());
         node.put("timestamp", cashWithdrawal.getTimestamp());
@@ -218,8 +237,14 @@ public class TransactionPrinter implements Visitor {
         transactionsArray.add(node);
     }
 
+    /**
+     * Proceseaza o tranzactie de tip AddInterestTransaction si adauga informatiile
+     * corespunzatoare in nodul JSON al tranzactiilor.
+     *
+     * @param addInterestTransaction Tranzactia de tip AddInterestTransaction.
+     */
     @Override
-    public void visit(AddInterestTransaction addInterestTransaction) {
+    public void visit(final AddInterestTransaction addInterestTransaction) {
         ObjectNode node = mapper.createObjectNode();
         node.put("timestamp", addInterestTransaction.getTimestamp());
         node.put("description", addInterestTransaction.getDescription());
@@ -228,14 +253,20 @@ public class TransactionPrinter implements Visitor {
         transactionsArray.add(node);
     }
 
+    /**
+     * Proceseaza o tranzactie de tip WithdrawSavingsTransaction si adauga informatiile
+     * corespunzatoare in nodul JSON al tranzactiilor.
+     *
+     * @param withdrawSavingsTransaction Tranzactia de tip WithdrawSavingsTransaction.
+     */
     @Override
-    public void visit(WithdrawSavingsTransaction withdrawSavingsTransaction) {
+    public void visit(final WithdrawSavingsTransaction withdrawSavingsTransaction) {
         ObjectNode node = mapper.createObjectNode();
         node.put("timestamp", withdrawSavingsTransaction.getTimestamp());
         node.put("description", withdrawSavingsTransaction.getDescription());
-        if(!withdrawSavingsTransaction.isError()) {
-            // TODO
-        }
+//        if (!withdrawSavingsTransaction.isError()) {
+//            // TODO
+//        }
         transactionsArray.add(node);
     }
 }

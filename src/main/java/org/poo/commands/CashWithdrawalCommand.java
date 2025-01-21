@@ -13,7 +13,7 @@ import org.poo.banking.User;
 
 import java.util.ArrayList;
 
-public class CashWithdrawalCommand implements Command {
+public final class CashWithdrawalCommand implements Command {
     private String cardNumber;
     private double amount;
     private String email;

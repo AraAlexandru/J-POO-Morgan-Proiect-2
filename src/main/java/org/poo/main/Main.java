@@ -9,9 +9,39 @@ import org.poo.banking.Graph;
 import org.poo.banking.User;
 import org.poo.checker.Checker;
 import org.poo.checker.CheckerConstants;
-import org.poo.commands.*;
+import org.poo.commands.AcceptSplitPaymentCommand;
+import org.poo.commands.AddAccountCommand;
+import org.poo.commands.AddFundsCommand;
+import org.poo.commands.AddInterestCommand;
+import org.poo.commands.AddNewBusinessAssociateCommand;
+import org.poo.commands.BusinessReportCommand;
+import org.poo.commands.CashWithdrawalCommand;
+import org.poo.commands.ChangeDepositLimitCommand;
+import org.poo.commands.ChangeInterestRateCommand;
+import org.poo.commands.ChangeSpendingLimitCommand;
+import org.poo.commands.CheckCardStatusCommand;
+import org.poo.commands.Command;
+import org.poo.commands.CreateCardCommand;
+import org.poo.commands.CreateOneTimeCardCommand;
+import org.poo.commands.DeleteAccountCommand;
+import org.poo.commands.DeleteCardCommand;
+import org.poo.commands.PayOnlineCommand;
+import org.poo.commands.PrintTransactionCommand;
+import org.poo.commands.PrintUsersCommand;
+import org.poo.commands.RejectSplitPaymentCommand;
+import org.poo.commands.ReportCommand;
+import org.poo.commands.SendMoneyCommand;
+import org.poo.commands.SetMinimumBalanceCommand;
+import org.poo.commands.SpendingsReportCommand;
+import org.poo.commands.SplitPaymentCommand;
+import org.poo.commands.UpgradePlanCommand;
+import org.poo.commands.WithdrawSavingsCommand;
 import org.poo.commerciants.Commerciant;
-import org.poo.fileio.*;
+import org.poo.fileio.CommandInput;
+import org.poo.fileio.CommerciantInput;
+import org.poo.fileio.ExchangeInput;
+import org.poo.fileio.ObjectInput;
+import org.poo.fileio.UserInput;
 import org.poo.observer.PlanUpgradeObserver;
 import org.poo.utils.Utils;
 
@@ -85,6 +115,11 @@ public final class Main {
         }
     }
 
+    /**
+     * Creeaza comercianti pe baza unui array de intrari si ii adauga in banca.
+     *
+     * @param commerciants Array de obiecte CommerciantInput care contin datele comerciantilor.
+     */
     public static void createCommerciants(final CommerciantInput[] commerciants) {
         Bank bank = Bank.getInstance();
         for (CommerciantInput commerciantInput : commerciants) {
@@ -110,175 +145,108 @@ public final class Main {
                 return new PrintUsersCommand();
 
             case "addAccount":
-                return new AddAccountCommand(
-                        commandInput.getEmail(),
+                return new AddAccountCommand(commandInput.getEmail(),
                         commandInput.getAccountType(),
-                        commandInput.getCurrency(),
-                        commandInput.getInterestRate()
+                        commandInput.getCurrency(), commandInput.getInterestRate()
                 );
-
             case "createCard":
-                return new CreateCardCommand(
-                        commandInput.getEmail(),
-                        commandInput.getAccount()
+                return new CreateCardCommand(commandInput.getEmail(), commandInput.getAccount()
                 );
-
             case "createOneTimeCard":
-                return new CreateOneTimeCardCommand(
-                        commandInput.getEmail(),
+                return new CreateOneTimeCardCommand(commandInput.getEmail(),
                         commandInput.getAccount()
                 );
-
             case "addFunds":
-                return new AddFundsCommand(
-                        commandInput.getAccount(),
-                        commandInput.getAmount(),
+                return new AddFundsCommand(commandInput.getAccount(), commandInput.getAmount(),
                         commandInput.getEmail()
                 );
-
             case "deleteAccount":
-                return new DeleteAccountCommand(
-                        commandInput.getEmail(),
-                        commandInput.getAccount()
+                return new DeleteAccountCommand(commandInput.getEmail(), commandInput.getAccount()
                 );
-
             case "deleteCard":
-                return new DeleteCardCommand(
-                        commandInput.getEmail(),
-                        commandInput.getCardNumber()
+                return new DeleteCardCommand(commandInput.getEmail(), commandInput.getCardNumber()
                 );
-
             case "payOnline":
-                return new PayOnlineCommand(
-                        commandInput.getCardNumber(),
-                        commandInput.getAmount(),
-                        commandInput.getCurrency(),
-                        commandInput.getDescription(),
-                        commandInput.getCommerciant(),
-                        commandInput.getEmail(),
-                        currencyGraph
+                return new PayOnlineCommand(commandInput.getCardNumber(), commandInput.getAmount(),
+                        commandInput.getCurrency(), commandInput.getDescription(),
+                        commandInput.getCommerciant(), commandInput.getEmail(), currencyGraph
                 );
-
             case "sendMoney":
-                return new SendMoneyCommand(
-                        commandInput.getEmail(),
-                        commandInput.getAccount(),
-                        commandInput.getReceiver(),
-                        commandInput.getDescription(),
-                        commandInput.getAmount(),
-                        currencyGraph
+                return new SendMoneyCommand(commandInput.getEmail(), commandInput.getAccount(),
+                        commandInput.getReceiver(), commandInput.getDescription(),
+                        commandInput.getAmount(), currencyGraph
                 );
-
             case "printTransactions":
-                return new PrintTransactionCommand(
-                        commandInput.getEmail()
+                return new PrintTransactionCommand(commandInput.getEmail()
                 );
-
             case "setMinimumBalance":
-                return new SetMinimumBalanceCommand(
-                        commandInput.getAccount(),
+                return new SetMinimumBalanceCommand(commandInput.getAccount(),
                         commandInput.getMinBalance()
                 );
-
             case "checkCardStatus":
                 return new CheckCardStatusCommand(
                         commandInput.getCardNumber()
                 );
-
             case "splitPayment":
-                return new SplitPaymentCommand(
-                        commandInput.getAccounts(),
-                        commandInput.getAmount(),
-                        commandInput.getSplitPaymentType(),
-                        commandInput.getAmountForUsers(),
-                        commandInput.getCurrency(),
+                return new SplitPaymentCommand(commandInput.getAccounts(),
+                        commandInput.getAmount(), commandInput.getSplitPaymentType(),
+                        commandInput.getAmountForUsers(), commandInput.getCurrency(),
                         currencyGraph
                 );
-
             case "report":
-                return new ReportCommand(
-                        commandInput.getAccount(),
-                        commandInput.getStartTimestamp(),
-                        commandInput.getEndTimestamp()
+                return new ReportCommand(commandInput.getAccount(),
+                        commandInput.getStartTimestamp(), commandInput.getEndTimestamp()
                 );
-
             case "spendingsReport":
-                return new SpendingsReportCommand(
-                        commandInput.getAccount(),
-                        commandInput.getStartTimestamp(),
-                        commandInput.getEndTimestamp()
+                return new SpendingsReportCommand(commandInput.getAccount(),
+                        commandInput.getStartTimestamp(), commandInput.getEndTimestamp()
                 );
-
             case "changeInterestRate":
-                return new ChangeInterestRateCommand(
-                        commandInput.getInterestRate(),
+                return new ChangeInterestRateCommand(commandInput.getInterestRate(),
                         commandInput.getAccount()
                 );
-
             case "addInterest":
-                return new AddInterestCommand(
-                        commandInput.getInterestRate(),
+                return new AddInterestCommand(commandInput.getInterestRate(),
                         commandInput.getAccount()
                 );
-
             case "withdrawSavings":
-                return new WithdrawSavingsCommand(
-                        commandInput.getAccount(),
-                        commandInput.getAmount(),
-                        commandInput.getCurrency()
+                return new WithdrawSavingsCommand(commandInput.getAccount(),
+                        commandInput.getAmount(), commandInput.getCurrency()
                 );
-
             case "upgradePlan":
-                return new UpgradePlanCommand(
-                        commandInput.getAccount(),
-                        commandInput.getNewPlanType(),
-                        currencyGraph
+                return new UpgradePlanCommand(commandInput.getAccount(),
+                        commandInput.getNewPlanType(), currencyGraph
                 );
             case "cashWithdrawal":
-                return new CashWithdrawalCommand(
-                        commandInput.getCardNumber(),
-                        commandInput.getAmount(),
-                        commandInput.getEmail(),
-                        commandInput.getLocation(),
-                        currencyGraph
+                return new CashWithdrawalCommand(commandInput.getCardNumber(),
+                        commandInput.getAmount(), commandInput.getEmail(),
+                        commandInput.getLocation(), currencyGraph
                 );
             case "acceptSplitPayment":
-                return new AcceptSplitPaymentCommand(
-                        commandInput.getEmail(),
+                return new AcceptSplitPaymentCommand(commandInput.getEmail(),
                         commandInput.getSplitPaymentType()
                 );
             case "rejectSplitPayment":
-                return new RejectSplitPaymentCommand(
-                        commandInput.getEmail(),
+                return new RejectSplitPaymentCommand(commandInput.getEmail(),
                         commandInput.getSplitPaymentType()
                 );
             case "addNewBusinessAssociate":
-                return new AddNewBusinessAssociateCommand(
-                        commandInput.getAccount(),
-                        commandInput.getRole(),
-                        commandInput.getEmail()
+                return new AddNewBusinessAssociateCommand(commandInput.getAccount(),
+                        commandInput.getRole(), commandInput.getEmail()
                 );
-
             case "changeSpendingLimit":
-                return new ChangeSpendingLimitCommand(
-                        commandInput.getEmail(),
+                return new ChangeSpendingLimitCommand(commandInput.getEmail(),
                         commandInput.getAccount(),
-                        commandInput.getAmount(),
-                        commandInput.getTimestamp()
+                        commandInput.getAmount(), commandInput.getTimestamp()
                 );
             case "businessReport":
-                return new BusinessReportCommand(
-                        commandInput.getType(),
-                        commandInput.getAccount(),
-                        commandInput.getStartTimestamp(),
-                        commandInput.getEndTimestamp(),
+                return new BusinessReportCommand(commandInput.getType(), commandInput.getAccount(),
+                        commandInput.getStartTimestamp(), commandInput.getEndTimestamp(),
                         commandInput.getTimestamp()
                 );
             case "changeDepositLimit":
-                return new ChangeDepositLimitCommand(
-                        commandInput.getEmail(),
-                        commandInput.getAccount(),
-                        commandInput.getAmount(),
+                return new ChangeDepositLimitCommand(commandInput.getEmail(),
+                        commandInput.getAccount(), commandInput.getAmount(),
                         commandInput.getTimestamp()
                 );
             default:

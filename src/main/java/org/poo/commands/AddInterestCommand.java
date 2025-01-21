@@ -41,9 +41,10 @@ public class AddInterestCommand implements Command {
             commandOutput.put("timestamp", timestamp);
             output.add(commandOutput);
         } else if (account != null) {
-            SavingsAccount savingsAccount = (SavingsAccount)account;
+            SavingsAccount savingsAccount = (SavingsAccount) account;
             var amount = savingsAccount.addInterest(timestamp);
-            bank.getUserByAccount(iban).addTransaction(new AddInterestTransaction(timestamp, iban, amount, savingsAccount.getCurrency()));
+            bank.getUserByAccount(iban).addTransaction(new AddInterestTransaction(timestamp,
+                    iban, amount, savingsAccount.getCurrency()));
         }
     }
 }

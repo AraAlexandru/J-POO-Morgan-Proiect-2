@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.poo.banking.Bank;
 import org.poo.banking.User;
 
-public class AcceptSplitPaymentCommand implements Command {
+public final class AcceptSplitPaymentCommand implements Command {
     private String email;
     private String type;
     public AcceptSplitPaymentCommand(final String email, final String type) {

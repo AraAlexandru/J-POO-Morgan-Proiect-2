@@ -9,7 +9,8 @@ import java.util.Set;
 
 /**
  * Reprezinta un cont de business care extinde clasa ClassicAccount.
- * Permite gestionarea utilizatorilor asociati, limitelor tranzactiilor si logarea tranzactiilor de business.
+ * Permite gestionarea utilizatorilor asociati, limitelor tranzactiilor
+ * si logarea tranzactiilor de business.
  */
 public class BusinessAccount extends ClassicAccount {
 
@@ -253,9 +254,13 @@ public class BusinessAccount extends ClassicAccount {
     public double getSpentForUser(final String userEmail, final int startTs, final int endTs) {
         double spent = 0.0;
         for (BusinessTransaction trx : businessTransactions) {
-            if (!trx.getUserEmail().equals(userEmail)) continue;
+            if (!trx.getUserEmail().equals(userEmail)) {
+                continue;
+            }
             int ts = trx.getTimestamp();
-            if (ts < startTs || ts > endTs) continue;
+            if (ts < startTs || ts > endTs) {
+                continue;
+            }
             if (trx.getType() == TransactionType.SPENT) {
                 spent += trx.getAmount();
             }
@@ -275,9 +280,13 @@ public class BusinessAccount extends ClassicAccount {
                                       final int endTs) {
         double dep = 0.0;
         for (BusinessTransaction trx : businessTransactions) {
-            if (!trx.getUserEmail().equals(userEmail)) continue;
+            if (!trx.getUserEmail().equals(userEmail)) {
+                continue;
+            }
             int ts = trx.getTimestamp();
-            if (ts < startTs || ts > endTs) continue;
+            if (ts < startTs || ts > endTs) {
+                continue;
+            }
             if (trx.getType() == TransactionType.DEPOSIT) {
                 dep += trx.getAmount();
             }

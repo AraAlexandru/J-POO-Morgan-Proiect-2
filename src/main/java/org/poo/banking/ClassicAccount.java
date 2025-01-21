@@ -32,25 +32,54 @@ public class ClassicAccount {
         this.cashbacks = new HashMap<>();
     }
 
+    /**
+     * Returneaza pragul total de cheltuieli pentru utilizator.
+     *
+     * @return Pragul total de cheltuieli.
+     */
     public double getTotalSpendingThreshold() {
         return totalSpendingThreshold;
     }
 
+    /**
+     * Adauga un cashback inregistrat in sistem.
+     *
+     * @param cashback Numele cashback-ului.
+     * @param percentage Procentul cashback-ului asociat.
+     */
     public void addCashback(final String cashback, final Double percentage) {
         cashbacks.put(cashback, percentage);
     }
 
+    /**
+     * Adauga o suma la pragul total de cheltuieli.
+     *
+     * @param amount Suma care trebuie adaugata la pragul de cheltuieli.
+     */
     public void addSpendingThreshold(final double amount) {
         this.totalSpendingThreshold += amount;
     }
 
-    public Integer getTransactionCount(String name) {
+    /**
+     * Returneaza numarul de tranzactii efectuate cu un comerciant specific.
+     *
+     * @param name Numele comerciantului.
+     * @return Numarul de tranzactii cu comerciantul respectiv sau null daca nu exista.
+     */
+    public Integer getTransactionCount(final String name) {
         if (transactionCommerciants.containsKey(name)) {
             return transactionCommerciants.get(name);
         }
         return null;
     }
 
+    /**
+     * Incrementeaza numarul de tranzactii asociate unui comerciant.
+     * Daca comerciantul nu exista, este adaugat cu o valoare initiala de 1.
+     *
+     * @param name Numele comerciantului.
+     * @return Numarul actualizat de tranzactii pentru comerciantul respectiv.
+     */
     public Integer incrementTransactionCount(final String name) {
         if (transactionCommerciants.containsKey(name)) {
             transactionCommerciants.put(name, transactionCommerciants.get(name) + 1);
@@ -177,14 +206,31 @@ public class ClassicAccount {
         return false;
     }
 
+    /**
+     * Verifica daca acest cont este un cont clasic.
+     *
+     * @return True daca este un cont clasic, altfel false.
+     */
     public boolean isClassicAccount() {
         return true;
     }
 
+    /**
+     * Verifica daca acest cont este un cont de afaceri.
+     *
+     * @return True daca este un cont de afaceri, altfel false.
+     */
     public boolean isBusinessAccount() {
         return false;
     }
 
+    /**
+     * Verifica daca un utilizator detine acest cont asociat unui card specific.
+     *
+     * @param user Utilizatorul care trebuie verificat.
+     * @param card Cardul clasic asociat contului.
+     * @return True daca utilizatorul detine acest cont, altfel false.
+     */
     public boolean checkCard(final User user, final ClassicCard card) {
         return user.getAccounts().contains(this);
     }

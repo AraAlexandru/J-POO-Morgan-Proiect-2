@@ -1,3 +1,9 @@
+commit 709983bd6e25b12eafac77806968fd2fcb902cdc
+Author: Alexandru Diaconu <alexandrudiiaconu@gmail.com>
+Date:   Tue Jan 21 02:25:53 2025 +0200
+
+    am adaugat 5 design patterns
+
 commit 34aabfd11c68420700cf89bd9c17591b94cd081a
 Author: Alexandru Diaconu <alexandrudiiaconu@gmail.com>
 Date:   Tue Jan 21 02:20:23 2025 +0200

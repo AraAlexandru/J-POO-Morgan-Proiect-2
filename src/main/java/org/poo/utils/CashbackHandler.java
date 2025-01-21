@@ -20,6 +20,13 @@ public final class CashbackHandler {
 
     private CashbackHandler() { }
 
+    /**
+     * Aplica un numar de tranzactii pentru un comerciant specific.
+     * Daca pragurile de cashback sunt atinse, se adauga cashback-ul corespunzator.
+     *
+     * @param account Contul clasic pentru care se actualizeaza numarul de tranzactii.
+     * @param currentCommerciant Comerciantul pentru care se incrementeaza numarul de tranzactii.
+     */
     public static void applyNrOfTransactions(final ClassicAccount account,
                                              final Commerciant currentCommerciant) {
 
@@ -36,6 +43,16 @@ public final class CashbackHandler {
         }
     }
 
+    /**
+     * Aplica pragul de cheltuieli pentru a calcula si adauga cashback-ul.
+     *
+     * @param account Contul clasic pentru care se verifica pragul de cheltuieli.
+     * @param convertedAmount Suma convertita in valuta contului.
+     * @param currentAccountCurrency Moneda contului curent.
+     * @param currencyGraph Graful de conversie valutara.
+     * @param user Utilizatorul asociat contului.
+     * @param currentCommerciant Comerciantul asociat tranzactiei.
+     */
     public static void applySpendingThreshold(final ClassicAccount account,
                                               final double convertedAmount,
                                               final Currency currentAccountCurrency,
@@ -61,6 +78,13 @@ public final class CashbackHandler {
         account.addSpendingThreshold(amountInRON);
     }
 
+    /**
+     * Aplica cashback-ul pentru tranzactiile anterioare, daca este cazul.
+     *
+     * @param account Contul clasic pentru care se verifica cashback-urile anterioare.
+     * @param currentCommerciant Comerciantul pentru care se aplica cashback-ul.
+     * @return Valoarea cashback-ului aplicat, sau null daca nu exista cashback-uri aplicabile.
+     */
     public static Double applyPreviousCashbacks(final ClassicAccount account,
                                                 final Commerciant currentCommerciant) {
         if (account.getCashbacks().containsKey(currentCommerciant.getType())) {

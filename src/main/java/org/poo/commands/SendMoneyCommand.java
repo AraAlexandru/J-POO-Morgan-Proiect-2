@@ -15,7 +15,6 @@ import org.poo.banking.PlanType;
 import org.poo.banking.InsufficientFundsTransaction;
 import org.poo.banking.TransactionType;
 import org.poo.commerciants.Commerciant;
-import org.poo.utils.CashbackHandler;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,7 @@ import org.poo.banking.BusinessAccount;
 import org.poo.banking.ClassicAccount;
 import org.poo.banking.User;
 
-public class AddNewBusinessAssociateCommand implements Command {
+public final class AddNewBusinessAssociateCommand implements Command {
     private String accountIban;
     private String role;
     private String email;

@@ -8,7 +8,7 @@ import org.poo.banking.MinimumAgeTransaction;
 import org.poo.banking.User;
 import org.poo.banking.WithdrawSavingsTransaction;
 
-public class WithdrawSavingsCommand implements Command {
+public final class WithdrawSavingsCommand implements Command {
     private String account;
     private double amount;
     private String currencyValue;
@@ -37,9 +37,9 @@ public class WithdrawSavingsCommand implements Command {
         ClassicAccount savingsAccount = bank.getAccountByIban(account);
         ClassicAccount targetAccount = null;
         if (savingsAccount != null && savingsAccount.isSavingsAccount()) {
-            for (ClassicAccount account : user.getAccounts()) {
-                if (account.isClassicAccount()) {
-                    targetAccount = account;
+            for (ClassicAccount userAccount : user.getAccounts()) {
+                if (userAccount.isClassicAccount()) {
+                    targetAccount = userAccount;
                     break;
                 }
             }

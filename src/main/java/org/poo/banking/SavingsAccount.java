@@ -1,9 +1,10 @@
 package org.poo.banking;
 
-public class SavingsAccount extends ClassicAccount {
+public final class SavingsAccount extends ClassicAccount {
     private double interestRate;
 
-    public SavingsAccount(final String iban, final Currency currency, final double interestRate) {
+    public SavingsAccount(final String iban, final Currency currency,
+                          final double interestRate) {
         super(iban, currency);
         this.interestRate = interestRate;
     }
@@ -42,7 +43,13 @@ public class SavingsAccount extends ClassicAccount {
         return true;
     }
 
-    public double addInterest(int timestamp) {
+    /**
+     * Adauga dobanda la soldul curent al contului, pe baza ratei dobanzii.
+     *
+     * @param timestamp Momentul la care este calculata dobanda.
+     * @return Valoarea dobanzii adaugate la sold.
+     */
+    public double addInterest(final int timestamp) {
         var value = getBalance() * getInterestRate();
         addFunds(value);
         return value;

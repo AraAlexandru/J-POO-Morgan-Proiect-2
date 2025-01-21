@@ -1,6 +1,6 @@
 package org.poo.banking;
 
-public class UpgradePlanTransaction extends Transaction {
+public final class UpgradePlanTransaction extends Transaction {
     private PlanType newPlanType;
     private int timestamp;
 
@@ -11,7 +11,7 @@ public class UpgradePlanTransaction extends Transaction {
     }
 
     @Override
-    public void accept(Visitor v) {
+    public void accept(final Visitor v) {
         v.visit(this);
     }
 

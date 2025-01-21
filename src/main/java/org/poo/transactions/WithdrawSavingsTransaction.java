@@ -3,7 +3,7 @@ package org.poo.banking;
 import lombok.Getter;
 
 @Getter
-public class WithdrawSavingsTransaction extends Transaction{
+public final class WithdrawSavingsTransaction extends Transaction {
     private boolean error = false;
 
     public WithdrawSavingsTransaction(final int timestamp, final String accountIban) {
@@ -11,13 +11,14 @@ public class WithdrawSavingsTransaction extends Transaction{
         error = false;
     }
 
-    public WithdrawSavingsTransaction(final int timestamp, final String accountIban, final String errorMsg) {
+    public WithdrawSavingsTransaction(final int timestamp, final String accountIban,
+                                      final String errorMsg) {
         super(timestamp, errorMsg, accountIban);
         error = true;
     }
 
     @Override
-    public void accept(Visitor visitor) {
+    public void accept(final Visitor visitor) {
         visitor.visit(this);
     }
 }

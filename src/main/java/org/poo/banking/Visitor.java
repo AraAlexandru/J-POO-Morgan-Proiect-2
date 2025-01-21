@@ -1,7 +1,5 @@
 package org.poo.banking;
 
-import org.poo.commands.CashWithdrawalCommand;
-
 /**
  * Interfata Visitor pentru aplicarea design pattern-ului Visitor.
  * Defineste metode pentru vizitarea diferitelor tipuri de tranzactii.
@@ -74,13 +72,38 @@ public interface Visitor {
      */
     void visit(ChangeInterestRateTransaction changeInterestRateTransaction);
 
+    /**
+     * Viziteaza o tranzactie care impune o restrictie de varsta minima.
+     *
+     * @param minimumAgeTransaction Tranzactia de restrictie de varsta minima.
+     */
     void visit(MinimumAgeTransaction minimumAgeTransaction);
 
+    /**
+     * Viziteaza o tranzactie de upgrade al planului utilizatorului.
+     *
+     * @param upgradePlanTransaction Tranzactia de upgrade al planului.
+     */
     void visit(UpgradePlanTransaction upgradePlanTransaction);
 
+    /**
+     * Viziteaza o tranzactie de retragere de numerar.
+     *
+     * @param cashWithdrawal Tranzactia de retragere de numerar.
+     */
     void visit(CashWithdrawalTransaction cashWithdrawal);
 
+    /**
+     * Viziteaza o tranzactie de adaugare a dobanzii la un cont.
+     *
+     * @param addInterestTransaction Tranzactia de adaugare a dobanzii.
+     */
     void visit(AddInterestTransaction addInterestTransaction);
 
+    /**
+     * Viziteaza o tranzactie de retragere a economiilor.
+     *
+     * @param withdrawSavingsTransaction Tranzactia de retragere a economiilor.
+     */
     void visit(WithdrawSavingsTransaction withdrawSavingsTransaction);
 }

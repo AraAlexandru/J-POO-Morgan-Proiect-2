@@ -2,7 +2,13 @@ package org.poo.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.poo.banking.*;
+import org.poo.banking.AccountCreatedTransaction;
+import org.poo.banking.Bank;
+import org.poo.banking.BusinessAccount;
+import org.poo.banking.ClassicAccount;
+import org.poo.banking.Currency;
+import org.poo.banking.SavingsAccount;
+import org.poo.banking.User;
 import org.poo.utils.Utils;
 
 public class AddAccountCommand implements Command {
@@ -47,8 +53,6 @@ public class AddAccountCommand implements Command {
                         new BusinessAccount(iban, currency, email);
                 user.addAccount(account);
             }
-            System.out.println("Account created: " + iban + " at " + timestamp);
-
             user.addTransaction(new AccountCreatedTransaction(timestamp));
         }
     }
