@@ -190,7 +190,14 @@ public class SendMoneyCommand implements Command {
         }
     }
 
-
+    /**
+     * Actualizeaza planul utilizatorului daca este eligibil pentru upgrade la Silver.
+     *
+     * @param user Utilizatorul care executa tranzactia.
+     * @param currentAccountCurrency Moneda contului curent.
+     * @param amount Suma tranzactiei.
+     * @param currencyGraph Graful de conversie valutara.
+     */
     static void upgradePlanForSilver(final User user, final Currency currentAccountCurrency,
                                      final double amount, final Graph<Currency> currencyGraph) {
         if (user.getPlanType() == PlanType.SILVER) {
@@ -213,6 +220,14 @@ public class SendMoneyCommand implements Command {
         }
     }
 
+    /**
+     * Converteste o suma dintr-o moneda in RON folosind graful de conversie.
+     *
+     * @param amount Suma care trebuie convertita.
+     * @param from Moneda initiala.
+     * @param currencyGraph Graful de conversie valutara.
+     * @return Suma convertita in RON.
+     */
     public static double convertToRon(final double amount,
                                       final Currency from,
                                       final Graph<Currency> currencyGraph) {
